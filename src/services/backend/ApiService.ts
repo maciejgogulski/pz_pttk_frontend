@@ -7,7 +7,7 @@ export interface ApiResponse<T> {
 }
 
 class ApiService {
-  private baseUrl = 'http://localhost:8000/api'
+  private baseUrl = process.env.BASE_URL
 
   token: string
 

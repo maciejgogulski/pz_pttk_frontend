@@ -7,6 +7,7 @@ import { useDependencies } from '../../../context/dependencies'
 import { useAuth } from '../../../context/auth'
 import * as Input from '../../../components/UI/Input'
 import Styles from './Register.module.scss'
+import { useAppSelector } from '../../../app/hooks'
 
 type Inputs = {
   firstName: string,
@@ -24,6 +25,9 @@ const Register: React.FC<Props> = () => {
   const apiService = getApiService()
   const { setToken, setLoggedIn } = useAuth()
   const navigate = useNavigate()
+
+  const selector = useAppSelector((state) => state.auth)
+  console.log(selector)
 
   const {
     register, handleSubmit, formState: { errors },

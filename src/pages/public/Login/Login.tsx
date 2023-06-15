@@ -7,6 +7,8 @@ import { useDependencies } from '../../../context/dependencies'
 import { useAuth } from '../../../context/auth'
 import * as Input from '../../../components/UI/Input'
 import Styles from './Login.module.scss'
+import { useAppSelector, useAppDispatch } from '../../../app/hooks'
+import Actions from '../../../app/actions'
 
 type Inputs = {
   email: string,
@@ -22,6 +24,12 @@ const Login: React.FC<Props> = () => {
   // eslint-disable-next-line no-unused-vars
   const { setToken, setLoggedIn, setRoles } = useAuth()
   const navigate = useNavigate()
+
+  const selector = useAppSelector((state) => state.auth)
+  const dispatch = useAppDispatch()
+
+  dispatch(Actions.auth.SET_TOKEN('login'))
+  console.log(selector)
 
   const {
     register, handleSubmit, formState: { errors },
