@@ -2,9 +2,11 @@
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { State } from './types'
+import { login } from './thunk'
 
 const INITIAL_STATE: State = {
-  token: 'sdfsdf',
+  loading: false,
+  token: undefined,
 }
 
 const authSlice = createSlice({
@@ -17,6 +19,21 @@ const authSlice = createSlice({
     UNSET_TOKEN: (state) => {
       state.token = undefined
     },
+    SET_LOADING: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(login.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.token = action.payload.token
+      })
+      .addCase(login.rejected, () => {
+        console.log('Wystapil nieoczekiwany blad')
+      })
   },
 })
 

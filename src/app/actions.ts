@@ -1,5 +1,12 @@
-import AuthSlice from './auth'
+import AuthSlice, { Thunk as AuthThunk } from './auth'
+
+const getActions = (actions: any, thunk: any) => ({
+  ...actions,
+  thunk: {
+    ...thunk,
+  },
+})
 
 export default {
-  auth: AuthSlice.actions,
+  auth: getActions(AuthSlice.actions, AuthThunk),
 }

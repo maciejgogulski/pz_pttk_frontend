@@ -28,7 +28,13 @@ const Login: React.FC<Props> = () => {
   const selector = useAppSelector((state) => state.auth)
   const dispatch = useAppDispatch()
 
-  dispatch(Actions.auth.SET_TOKEN('login'))
+  // dispatch(Actions.auth.SET_LOADING(true))
+  //
+  // dispatch(Actions.auth.thunk.login({
+  //   email: 'dfsdf',
+  //   password: 'dfsdf',
+  // }))
+
   console.log(selector)
 
   const {

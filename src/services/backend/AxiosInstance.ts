@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const axiosInstance = (token: string | undefined) => {
+const axiosInstance = (token?: string) => {
   const options = {
     baseURL: process.env.BACKEND_URL,
     timeout: 20000,
