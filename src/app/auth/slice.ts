@@ -2,9 +2,11 @@
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { State } from './types'
+import { login } from './thunk'
 
 const INITIAL_STATE: State = {
-  token: 'sdfsdf',
+  token: undefined,
+  loading: false,
 }
 
 const authSlice = createSlice({
@@ -17,6 +19,20 @@ const authSlice = createSlice({
     UNSET_TOKEN: (state) => {
       state.token = undefined
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(login.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.loading = false
+        console.log(action)
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.loading = false
+        console.log(action)
+      })
   },
 })
 
