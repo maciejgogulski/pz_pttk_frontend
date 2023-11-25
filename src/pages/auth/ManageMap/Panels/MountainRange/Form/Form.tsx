@@ -62,7 +62,7 @@ const Form: React.FC<Props> = () => {
   }
 
   const [options, setOptions] = useState<Record<number, string>>({})
-  const [sortedMountainGroups, setSortedGroups] = useState<Record<number, string>>({})
+  // const [sortedMountainGroups, setSortedGroups] = useState<Record<number, string>>({})
 
   useEffect(() => {
     const fetchData = async () => {
@@ -90,12 +90,6 @@ const Form: React.FC<Props> = () => {
 
     fetchData()
   }, [id, mountainRangeService, mountainGroupService])
-
-  useEffect(() => {
-    // Sort the allMountainGroups
-    const sortedGroups = Object.values(options).sort((a, b) => a.localeCompare(b))
-    setSortedGroups(sortedGroups)
-  }, [options])
 
   const deleteMountainRange = async () => {
     try {
@@ -143,11 +137,12 @@ const Form: React.FC<Props> = () => {
         <div className="mb-3">
           <Select.Component
             label="Wybierz grupę górską"
-            options={sortedMountainGroups}
+            options={options}
             register={register}
             name="mountain_group_id"
             errorMessage={errors?.mountain_group_id?.message || undefined}
             default={mountainRange?.mountain_group_id || groupId}
+            sortOptions
           />
         </div>
 
@@ -155,7 +150,7 @@ const Form: React.FC<Props> = () => {
           type="submit"
           variant="secondary"
           className="me-3"
-          href={getPath(PathNames.MOUNTAIN_GROUP)}
+          href={getPath(PathNames.MANAGE_MAP)}
         >
           Powrót
         </Button>

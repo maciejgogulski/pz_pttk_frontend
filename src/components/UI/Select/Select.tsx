@@ -12,23 +12,25 @@ type Props = {
   register: any,
   // eslint-disable-next-line no-unused-vars
   onChange?: (e: any) => void,
+    sortOptions?: boolean
 }
 
-const Select: React.FC<Props> = (props) => (
-  <div>
-    <FloatingLabel
-      controlId="floatingSelect"
-      label={props.label}
-    >
-      <Form.Select
-        aria-label="Floating label select example"
-        onChange={props.onChange}
-        {...props.register(props.name, {
-          onChange: props.onChange,
-        })}
-      >
-        {
-          Object.entries(props.options).map(([key, value]) => (
+const Select: React.FC<Props> = (props) => {
+  const sortedOptions = props.sortOptions
+    ? Object.entries(props.options).sort((a, b) => String(a[1]).localeCompare(String(b[1])))
+    : Object.entries(props.options)
+
+  return (
+    <div>
+      <FloatingLabel controlId="floatingSelect" label={props.label}>
+        <Form.Select
+          aria-label="Floating label select example"
+          onChange={props.onChange}
+          {...props.register(props.name, {
+            onChange: props.onChange,
+          })}
+        >
+          {sortedOptions.map(([key, value]) => (
             <option
               key={value}
               value={key}
@@ -36,21 +38,19 @@ const Select: React.FC<Props> = (props) => (
             >
               {value}
             </option>
-          ))
-        }
-      </Form.Select>
-    </FloatingLabel>
+          ))}
+        </Form.Select>
+      </FloatingLabel>
 
-    <span className="text-danger">
-      {props?.errorMessage }
-    </span>
-  </div>
-)
-
+      <span className="text-danger">{props.errorMessage}</span>
+    </div>
+  )
+}
 Select.defaultProps = {
   errorMessage: undefined,
   default: '',
   onChange: () => {},
+  sortOptions: false,
 }
 
 export default Select

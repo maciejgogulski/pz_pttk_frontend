@@ -11,7 +11,7 @@ const Welcome: React.FC<Props> = () => {
   return (
     <Stack direction="vertical" gap={3}>
       <div style={{ height: '30vh' }} />
-      <h2 className="text-center pb-3">Górskie Odznaki Turystyczne</h2>
+      <h2 className="text-center pb-3">Górska Odznaka Turystyczna</h2>
       <Button
         type="submit"
         variant="success"
