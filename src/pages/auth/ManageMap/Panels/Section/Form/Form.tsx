@@ -148,11 +148,14 @@ const Form: React.FC<Props> = () => {
 
     try {
       if (id) {
-        await sectionService.createSection(transformedData)
+        const sectionResult = await sectionService.createSection(transformedData)
         toastUtils.Toast.showToast(
           toastUtils.types.INFO,
           'Edycja odcinka przebiegła pomyślnie',
         )
+        navigate(getPath(PathNames.SECTION, {
+          id: sectionResult.id,
+        }))
       } else {
         const sectionResult = await sectionService.createSection(transformedData)
         toastUtils.Toast.showToast(
@@ -160,7 +163,7 @@ const Form: React.FC<Props> = () => {
           'Dodanie nowego odcinka przebiegło pomyślnie',
         )
 
-        navigate(getPath(PathNames.SECTION_EDIT, {
+        navigate(getPath(PathNames.SECTION, {
           id: sectionResult.id,
         }))
       }
@@ -181,7 +184,11 @@ const Form: React.FC<Props> = () => {
         'Usunięcie odcinka przebiegło pomyślnie',
       )
 
-      navigate(getPath(PathNames.MOUNTAIN_GROUP))
+      if (section) {
+        navigate(getPath(PathNames.MOUNTAIN_RANGE, {
+          id: section.mountainRange?.id,
+        }))
+      }
     } catch (err) {
       toastUtils.Toast.showToast(
         toastUtils.types.ERROR,
