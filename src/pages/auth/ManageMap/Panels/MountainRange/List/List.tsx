@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Button, Spinner } from 'react-bootstrap'
 import { v4 as uuidv4 } from 'uuid'
 import { useDependencies } from '../../../../../../context/dependencies'
@@ -15,6 +15,7 @@ const List: React.FC<Props> = () => {
   const apiService = getApiService()
   const { token } = useAuth()
   const toastUtils = getToastUtils()
+  const navigate = useNavigate()
 
   const [mountainRange, setMountainRange] = useState<(MountainRange | undefined)>(undefined)
   const { id } = useParams()
@@ -32,6 +33,24 @@ const List: React.FC<Props> = () => {
       )
 
       window.location.reload()
+    } catch (err) {
+      toastUtils.Toast.showToast(
+        toastUtils.types.ERROR,
+        'Wystąpił nieocezekiwany błąd',
+      )
+    }
+  }
+
+  const deleteMountainRange = async () => {
+    try {
+      await mountainRangeService.deleteMountainRange(id || '')
+
+      toastUtils.Toast.showToast(
+        toastUtils.types.INFO,
+        'Usunięcie pasma górskiego przebiegło pomyślnie',
+      )
+
+      navigate(getPath(PathNames.MANAGE_MAP))
     } catch (err) {
       toastUtils.Toast.showToast(
         toastUtils.types.ERROR,
@@ -77,7 +96,7 @@ const List: React.FC<Props> = () => {
               >
                 <Button
                   className="me-2 mb-2"
-                  href={getPath(PathNames.MOUNTAIN_RANGE, {
+                  href={getPath(PathNames.MOUNTAIN_RANGE_EDIT, {
                     id,
                   })}
                   variant="primary"
@@ -85,15 +104,13 @@ const List: React.FC<Props> = () => {
                   Edytuj pasmo górskie
                 </Button>
 
-                <Button
-                  className="me-2 mb-2"
-                  href={getPath(PathNames.MOUNTAIN_RANGE_DELETE, {
-                    id,
-                  })}
+                <Modal.Component
+                  title="Usuń pasmo górskie"
+                  message="Czy napewno chcesz usunąć pasmo górskie?"
+                  action={deleteMountainRange}
                   variant="danger"
-                >
-                  Usuń pasmo górskie
-                </Button>
+                  style={{ marginBottom: '0.5rem' }}
+                />
               </div>
 
               <h2 className="mb-3">
