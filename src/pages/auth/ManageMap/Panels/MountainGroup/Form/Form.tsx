@@ -36,18 +36,21 @@ const Form: React.FC<Props> = () => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
       if (id) {
-        await mountainGroupService.editMountainGroup(id, data)
+        const result = await mountainGroupService.editMountainGroup(id, data)
         toastUtils.Toast.showToast(
           toastUtils.types.INFO,
           'Edycja grupy górskiej przebiegło pomyślnie',
         )
+        navigate(getPath(PathNames.MANAGE_MAP, {
+          id: result.id,
+        }))
       } else {
         const result = await mountainGroupService.addMountainGroup(data)
         toastUtils.Toast.showToast(
           toastUtils.types.SUCCESS,
           'Dodanie grupy górskiej przebiegło pomyślnie',
         )
-        navigate(getPath(PathNames.MOUNTAIN_GROUP_EDIT, {
+        navigate(getPath(PathNames.MANAGE_MAP, {
           id: result.id,
         }))
       }
@@ -80,7 +83,7 @@ const Form: React.FC<Props> = () => {
         'Usunięcie grupy górskiej przebiegło pomyślnie',
       )
 
-      navigate(getPath(PathNames.MOUNTAIN_GROUP))
+      navigate(getPath(PathNames.MANAGE_MAP))
     } catch (err) {
       toastUtils.Toast.showToast(
         toastUtils.types.ERROR,
