@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Button, Spinner } from 'react-bootstrap'
 import { useDependencies } from '../../../../../../context/dependencies'
 import { useAuth } from '../../../../../../context/auth'
 import Section from '../../../../../../models/Section'
 import { getPath, PathNames } from '../../../../../../utils/defines'
+import * as Modal from '../../../../../../components/UI/Modal'
 
 type Props = {}
 
 const List: React.FC<Props> = () => {
-  const { getApiService } = useDependencies()
+  const { getApiService, getToastUtils } = useDependencies()
   const apiService = getApiService()
   const { token } = useAuth()
 
@@ -17,6 +18,29 @@ const List: React.FC<Props> = () => {
   const [section, setSection] = useState<(Section | undefined)>()
   const [loading, setLoading] = useState<(boolean)>(true)
   const [sectionService] = useState(apiService.mountainData.getSection(token))
+  const toastUtils = getToastUtils()
+  const navigate = useNavigate()
+
+  const deleteSection = async () => {
+    try {
+      await sectionService.deleteSection(id || '')
+
+      toastUtils.Toast.showToast(
+        toastUtils.types.INFO,
+        'Usunięcie odcinka przebiegło pomyślnie',
+      )
+      if (section) {
+        navigate(getPath(PathNames.MOUNTAIN_RANGE, {
+          id: section.mountainRange?.id,
+        }))
+      }
+    } catch (err) {
+      toastUtils.Toast.showToast(
+        toastUtils.types.ERROR,
+        'Wystąpił nieocezekiwany błąd',
+      )
+    }
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -219,15 +243,13 @@ const List: React.FC<Props> = () => {
                 Edytuj odcinek
               </Button>
 
-              <Button
+              <Modal.Component
+                title="Usuń odcinek"
+                message="Czy napewno chcesz usunąć odcinek?"
+                action={deleteSection}
                 variant="danger"
-                href={getPath(PathNames.SECTION_DELETE, {
-                  id: section.id,
-                })}
-                className="me-2 mt-2"
-              >
-                Usuń odcinek
-              </Button>
+                style={{ marginTop: '0.5rem', marginRight: '0.5rem' }}
+              />
 
               <Button
                 className="me-2 mt-2"
