@@ -133,6 +133,10 @@ const Modify: React.FC<Props> = () => {
           toastUtils.types.SUCCESS,
           'Edycja wycieczki przebiegła pomyślnie',
         )
+
+        navigate(
+          getPath(PathNames.TRIPS),
+        )
       } else {
         await tripService.createTrip(data)
 
