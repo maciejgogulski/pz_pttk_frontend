@@ -78,17 +78,16 @@ const TerrainPointComponent: React.FC<Props> = () => {
           toastUtils.types.INFO,
           'Edycja punktu przebiegła pomyślnie',
         )
+        navigate(getPath(PathNames.TERRAIN_POINT_LIST))
       } else {
-        const terrainPointResult = await terrainPointService.createTerrainPoint(data)
+        await terrainPointService.createTerrainPoint(data)
 
         toastUtils.Toast.showToast(
           toastUtils.types.SUCCESS,
           'Dodanie nowego punktu przebiegło pomyślnie',
         )
 
-        navigate(getPath(PathNames.TERRAIN_POINT_EDIT, {
-          id: terrainPointResult.id,
-        }))
+        navigate(getPath(PathNames.TERRAIN_POINT_LIST))
       }
     } catch (err) {
       toastUtils.Toast.showToast(
@@ -107,7 +106,7 @@ const TerrainPointComponent: React.FC<Props> = () => {
         'Usunięcie punktu przebiegło pomyślnie',
       )
 
-      navigate(getPath(PathNames.MOUNTAIN_GROUP))
+      navigate(getPath(PathNames.TERRAIN_POINT_LIST))
     } catch (err) {
       toastUtils.Toast.showToast(
         toastUtils.types.ERROR,
