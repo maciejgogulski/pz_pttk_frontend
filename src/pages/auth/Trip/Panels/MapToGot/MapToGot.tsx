@@ -78,7 +78,9 @@ const MapToGot: React.FC<Props> = () => {
         'Pomyślnie wpisano wybrane odcinki do książeczki GOT',
       )
 
-      navigate(getPath(PathNames.TRIPS))
+      setTimeout(() => {
+        window.location.reload()
+      }, 1000)
     } catch (err) {
       toastUtils.Toast.showToast(
         toastUtils.types.ERROR,
@@ -207,6 +209,9 @@ const MapToGot: React.FC<Props> = () => {
             ))}
           </tbody>
         </Table>
+        <Button className="mb-3" variant="secondary" onClick={() => navigate(getPath(PathNames.TRIPS))}>
+          Powrót do wycieczek
+        </Button>
       </>
       )}
     </div>
