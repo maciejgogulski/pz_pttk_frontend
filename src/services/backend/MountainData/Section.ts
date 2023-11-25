@@ -23,6 +23,10 @@ class SectionService {
     return this.apiService.post<Section>(`${this.sectionUrl}`, data)
   }
 
+  public async editSection(sectionId: string, data?: any): Promise<(Section)> {
+    return this.apiService.put<Section>(`${this.sectionUrl}/${sectionId}`, data)
+  }
+
   public async deleteSection(sectionId : string): Promise<Section> {
     const response = await this.apiService.delete<ApiResponse<Section>>(`${this.sectionUrl}/${sectionId}`)
     return response as any as Promise<Section>
