@@ -6,6 +6,7 @@ type Props = {
   message: string,
   action: () => void,
   variant: string,
+  style?: React.CSSProperties,
 }
 
 const ModalComponent: React.FC<Props> = (props) => {
@@ -25,6 +26,7 @@ const ModalComponent: React.FC<Props> = (props) => {
         type="button"
         variant={props.variant}
         onClick={handleShow}
+        style={props.style}
       >
         {props.title}
       </Button>
@@ -49,6 +51,10 @@ const ModalComponent: React.FC<Props> = (props) => {
       </Modal>
     </>
   )
+}
+
+ModalComponent.defaultProps = {
+  style: {},
 }
 
 export default ModalComponent
