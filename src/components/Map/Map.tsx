@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from 'react'
 import {
-  MapContainer, Marker, Polyline, Popup, TileLayer, useMapEvents,
+  MapContainer, Marker, Polyline, Popup, TileLayer, useMap, useMapEvents,
 } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import { renderToStaticMarkup } from 'react-dom/server'
@@ -25,6 +25,12 @@ type Props = {
   zoom?: number
 }
 
+const SetViewOnClick = (props: { center: Elements.Point }) => {
+  const map = useMap()
+  map.setView(props.center.getPosition())
+  return null
+}
+
 const Map: React.FC<Props> = (props) => {
   const [clickedPosition, setClickedPosition] = useState<[number, number] | null>(null)
   const { getApiService } = useDependencies()
@@ -32,6 +38,11 @@ const Map: React.FC<Props> = (props) => {
   const { token } = useAuth()
   const [lines, setLines] = useState<Elements.Line[]>([])
   const [terrainPointService] = useState(apiService.mountainData.getTerrainPoint(token))
+  const [center, setCenter] = useState<Elements.Point>(new Elements.Point(
+    '',
+    '50.44',
+    '18.91',
+  ))
 
   const handleClick = (e: any) => {
     if (props.onMarkerPositionChange) {
@@ -73,6 +84,20 @@ const Map: React.FC<Props> = (props) => {
       }
 
       setLines(props.lines || [])
+      if (props.lines?.[0].pointA && props.lines?.[0].pointB) {
+        const centerTmp = new Elements.Point(
+          '',
+          ((
+            parseFloat(props.lines[0].pointA.latitude)
+            + parseFloat(props.lines[0].pointB.latitude)
+          ) / 2).toString(),
+          ((
+            parseFloat(props.lines[0].pointA.longitude)
+            + parseFloat(props.lines[0].pointB.longitude)
+          ) / 2).toString(),
+        )
+        setCenter(centerTmp)
+      }
     }
 
     fetchData()
@@ -85,6 +110,12 @@ const Map: React.FC<Props> = (props) => {
     ),
     terrainPointService,
   ])
+
+  useEffect(() => {
+    if (props.center) {
+      setCenter(props.center)
+    }
+  }, [props.center])
 
   const customMarkerIcon = divIcon({
     html: iconMarkup,
@@ -163,6 +194,8 @@ const Map: React.FC<Props> = (props) => {
           </div>
         ))
       }
+
+      <SetViewOnClick center={center} />
     </MapContainer>
   )
 }
