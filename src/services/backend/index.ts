@@ -7,6 +7,7 @@ import User from './User/User'
 import Trip from './Trip/Trip'
 import GotBook from './GotBook/GotBook'
 import Badge from './Badge/Badge'
+import BadgeAward from './BadgeAward/BadgeAward'
 
 export * from './BackendInterface'
 
@@ -23,6 +24,8 @@ export default class Backend implements BackendInterface {
 
   getBadge: (token: string | undefined) => Badge
 
+  getBadgeAward: (token: string | undefined) => BadgeAward
+
   constructor() {
     this.mountainData = new MountainData()
     this.getAuth = () => new Auth()
@@ -30,5 +33,6 @@ export default class Backend implements BackendInterface {
     this.getBadge = (token: string | undefined) => new Badge(token || '')
     this.getUser = (token: string | undefined) => new User(token || '')
     this.getGotBook = (token: string | undefined) => new GotBook(token || '')
+    this.getBadgeAward = (token: string | undefined) => new BadgeAward(token || '')
   }
 }
