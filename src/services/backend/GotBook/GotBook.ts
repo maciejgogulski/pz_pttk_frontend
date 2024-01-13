@@ -50,6 +50,7 @@ class GotBookService {
       Boolean(entryBase.b_to_a),
       entryBase.trip_plan_entry_id,
       entryBase.points,
+      entryBase.status,
     ))
   }
 

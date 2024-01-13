@@ -22,6 +22,8 @@ class GotBookEntry {
 
   points: number
 
+  status: string
+
   constructor(
     id: number,
     sectionId: number,
@@ -32,6 +34,7 @@ class GotBookEntry {
     oppositeDirection: boolean,
     tripPlanEntryId: number,
     points: number,
+    status: string,
   ) {
     this.id = id
     this.sectionId = sectionId
@@ -42,6 +45,7 @@ class GotBookEntry {
     this.badgeAwardId = badgeAwardId
     this.tripPlanEntryId = tripPlanEntryId
     this.points = points
+    this.status = status
   }
 }
 
