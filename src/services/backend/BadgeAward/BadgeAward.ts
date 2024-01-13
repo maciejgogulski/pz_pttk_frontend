@@ -13,6 +13,14 @@ class BadgeAwardService {
   public async getBadgeAwardsForGotBook(): Promise<BadgeAward[]> {
     return this.apiService.get<BadgeAward[]>(`${this.badgeAwardUrl}/for-got-book`)
   }
+
+  public async getBadgeAwardsForVerification(): Promise<BadgeAward[]> {
+    return this.apiService.get<BadgeAward[]>(`${this.badgeAwardUrl}/for-leader-verification`)
+  }
+
+  public async verifyGotBookEntry(entryId: number) {
+    await this.apiService.put(`${this.badgeAwardUrl}/entry/${entryId}/verify-by-leader`)
+  }
 }
 
 export default BadgeAwardService

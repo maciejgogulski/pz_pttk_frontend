@@ -36,6 +36,8 @@ export enum PathNames {
   LEADERS = 'Zarządzanie przodownikami',
   LEADER_EDIT = 'Edycja leadera',
 
+  VERIFICATION = 'Weryfikacja wpisów',
+
   TRIPS = 'Zarządzanie wycieczkami',
   TRIP_ADD = 'Dodaj wycieczkę',
   TRIP_EDIT = 'Modyfikuj wycieczkę',
@@ -78,6 +80,8 @@ export const PathLinkMap = new Map([
 
   [PathNames.LEADERS, '/leaders'],
   [PathNames.LEADER_EDIT, '/leader/edit/:id'],
+
+  [PathNames.VERIFICATION, '/verification'],
 
   [PathNames.TRIPS, '/trips'],
   [PathNames.TRIP_ADD, '/trip/add'],
