@@ -3,11 +3,14 @@
 
 import GotBookEntry from '@/models/GotBookEntry'
 import Badge from '@/models/Badge'
+import Tourist from '@/models/Tourist'
 
 class BadgeAward {
   id: number
 
   userId: number
+
+  tourist: Tourist
 
   badge_id: number
 
@@ -24,6 +27,7 @@ class BadgeAward {
   constructor(
     id: number,
     userId: number,
+    tourist: Tourist,
     badgeId: number,
     badge: Badge,
     grantDate: Date,
@@ -33,6 +37,7 @@ class BadgeAward {
   ) {
     this.id = id
     this.userId = userId
+    this.tourist = tourist
     this.badge_id = badgeId
     this.badge = badge
     this.grant_date = grantDate

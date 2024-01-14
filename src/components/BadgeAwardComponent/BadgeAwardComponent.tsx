@@ -31,7 +31,7 @@ BadgeAwardFormWrapper.defaultProps = {
 type Props = {
     badgeAward: BadgeAward
     variant?: string
-  leaderVerification?: boolean
+    leaderVerification?: boolean
 }
 
 const BadgeAwardComponent: React.FC<Props> = (props) => {
@@ -157,7 +157,7 @@ const BadgeAwardComponent: React.FC<Props> = (props) => {
                   <td>{index + 1}</td>
                   <td>{entry.section.name}</td>
                   <td>
-                    {entry.oppositeDirection ? (
+                    {entry.b_to_a ? (
                       <FontAwesomeIcon className="ms-4" icon={faArrowLeft} />
                     ) : (
                       <FontAwesomeIcon className="ms-4" icon={faArrowRight} />

@@ -16,8 +16,6 @@ const VerificationComponent: React.FC = () => {
   const { token } = useAuth()
   const badgeAwardService = apiService.getBadgeAward(token)
 
-
-
   const fetchData = async () => {
     setBadgeAwards(await badgeAwardService.getBadgeAwardsForVerification())
     setLoading(false)
@@ -43,12 +41,18 @@ const VerificationComponent: React.FC = () => {
         Weryfikacja wpisów do GOT
       </h1>
       {badgeAwards.map((award) => (
-        <BadgeAwardComponent
-          badgeAward={award}
-          variant="success"
-          leaderVerification
-          key={uuidv4()}
-        />
+        <>
+          <h5>
+            Turysta:
+            {` ${award.tourist.first_name} ${award.tourist.last_name}`}
+          </h5>
+          <BadgeAwardComponent
+            badgeAward={award}
+            variant="success"
+            leaderVerification
+            key={uuidv4()}
+          />
+        </>
       ))}
     </div>
   )

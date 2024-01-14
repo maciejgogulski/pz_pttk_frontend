@@ -16,7 +16,7 @@ class GotBookEntry {
 
   date: Date
 
-  oppositeDirection: boolean
+  b_to_a: boolean
 
   tripPlanEntryId: number
 
@@ -31,7 +31,8 @@ class GotBookEntry {
     tripDate: Date,
     gotBookId: number,
     badgeAwardId: number,
-    oppositeDirection: boolean,
+    // eslint-disable-next-line camelcase
+    b_to_a: boolean,
     tripPlanEntryId: number,
     points: number,
     status: string,
@@ -41,7 +42,8 @@ class GotBookEntry {
     this.section = section
     this.date = tripDate
     this.gotBookId = gotBookId
-    this.oppositeDirection = oppositeDirection
+    // eslint-disable-next-line camelcase
+    this.b_to_a = b_to_a
     this.badgeAwardId = badgeAwardId
     this.tripPlanEntryId = tripPlanEntryId
     this.points = points
